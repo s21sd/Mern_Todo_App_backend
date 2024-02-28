@@ -31,27 +31,6 @@ router.post('/createtodo', async (req, res) => {
     }
 
 })
-// To get all the TODO
-// router.get('/getalltodos', async (req, res) => {
-//     try {
-//         // Verify Firebase ID Token
-//         const decodedToken = await firebaseAdmin.auth().verifyIdToken(req.headers.authorization);
-//         const userId = decodedToken.uid;
-//         console.log(userId)
-//         // Fetch todos associated with the authenticated user's ID
-//         const todos = await Todo.find({ user_id: userId });
-
-//         res.status(200).json({
-//             todos,
-//             message: "Todos fetched successfully"
-//         });
-//     } catch (error) {
-//         console.error(error);
-//         res.status(500).json({
-//             message: "Some error occurred"
-//         });
-//     }
-// });
 router.get('/getalltodos', async (req, res) => {
     try {
         const todos = await Todo.find();
