@@ -6,6 +6,7 @@ const authenticateToken = async (req, res, next) => {
     try {
         // Fetch the user document from the database based on the token
         const token = req.cookies.token;
+        console.log(token)
         if (!token) {
             return res.status(401).json({ message: "Auth Error: Token not provided" });
         }

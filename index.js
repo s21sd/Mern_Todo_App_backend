@@ -7,7 +7,7 @@ const todoRoutes = require('./ROUTES/TodoRoutes')
 const authRoutes = require('./ROUTES/AuthRoutes')
 require('./db');
 const PORT = 8000;
-app.use(cors());
+// app.use(cors());
 app.use((req, res, next) => {
     const allowedOrigins = ['http://localhost:3000']; // Update this with your frontend URL
     const origin = req.headers.origin;

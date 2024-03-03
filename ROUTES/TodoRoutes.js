@@ -36,8 +36,9 @@ router.post('/createtodo', authenticateToken, async (req, res) => {
 })
 router.get('/getalltodos', authenticateToken, async (req, res) => {
     try {
-        const userId = req.id; // Get user ID from authenticated request
-        const todos = await Todo.find({ user: userId.id });
+        const userId = req.user.id; // Get user ID from authenticated request
+        console.log(userId);
+        const todos = await Todo.find({ user: userId });
         res.status(200).json({
             todos,
             message: "Todos retrieved successfully"
