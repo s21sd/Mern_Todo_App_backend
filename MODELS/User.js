@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const registerScema = new mongoose.Schema({
-
     name: {
         type: String,
         required: true
@@ -14,8 +13,9 @@ const registerScema = new mongoose.Schema({
         required: true,
         unique: true
     },
-    age: {
-        type: Number,
+    todo: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'Todos',
     },
 })
 
