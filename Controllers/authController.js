@@ -1,21 +1,27 @@
 const jwt = require('jsonwebtoken');
+const Register = require('../MODELS/User');
 require('dotenv').config();
 
-const authenticateToken = (req, res, next) => {
-    const token = req.cookies.token; // Extract token from cookies
-    // const token = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ZTQyZmNhZmM3M2QxMzlhMGM4MzhjZSIsImlhdCI6MTcwOTQ1NzE5MH0.8uXF2jr92v7Dp6iZXZciOv4CXH1nkR204Zq4XHz29ac'; // Extract token from cookies
-    console.log('token', token);
-
-    if (!token) {
-        return res.status(401).json({ message: "Auth Error" });
-    }
+const authenticateToken = async (req, res, next) => {
     try {
+        // Fetch the user document from the database based on the token
+        const token = req.cookies.token;
+        if (!token) {
+            return res.status(401).json({ message: "Auth Error: Token not provided" });
+        }
+
+        const user = await Register.findOne({ token });
+        if (!user) {
+            return res.status(401).json({ message: "Auth Error: Invalid Token" });
+        }
+
+        // Verify the token
         const decoded = jwt.verify(token, process.env.JWT_SECRET_KEY);
-        req.id = decoded;
+        req.user = decoded; // Attach the decoded user information to the request object
         next();
     } catch (error) {
-        console.log(error);
-        res.status(500).json({ message: "Invalid Token" });
+        console.error(error);
+        res.status(500).json({ message: "Server Error" });
     }
 }
 

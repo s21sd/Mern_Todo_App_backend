@@ -17,6 +17,9 @@ const registerScema = new mongoose.Schema({
         type: mongoose.Schema.Types.ObjectId,
         ref: 'Todos',
     },
+    token: {
+        type: String
+    }
 })
 
 const Register = mongoose.model('Register', registerScema);
